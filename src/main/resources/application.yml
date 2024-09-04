@@ -1,0 +1,25 @@
+server:
+  port: 8081
+  error:
+    include-message: always
+
+spring:
+  main:
+    web-application-type: servlet
+  datasource:
+    url: jdbc:postgresql://localhost:5332/customer
+    username: danilkompaniets
+    password: Danone0502603734!
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+  flyway:
+    url: jdbc:postgresql://localhost:5332/customer
+    enabled: true
+    user: danilkompaniets
+    password: Danone0502603734!

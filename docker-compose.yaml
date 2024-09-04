@@ -1,0 +1,54 @@
+services:
+  db:
+    container_name: postgres
+    image: postgres:14
+    environment:
+      POSTGRES_USER: danilkompaniets
+      POSTGRES_PASSWORD: Danone0502603734!
+      PGDATA: /data/postgres
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - "5332:5432"
+    networks:
+      - postgres
+    restart: unless-stopped
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    ports:
+      - "5050:80"
+    networks:
+      - postgres
+    restart: unless-stopped
+    depends_on:
+      - db
+
+  demo:
+    container_name: demo
+    image: danilkompaniets/demo
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/customer
+      SPRING_FLYWAY_URL: jdbc:postgresql://db:5432/customer
+    ports:
+      - "8080:8080"
+    networks:
+      - postgres
+    depends_on:
+      - db
+    restart: unless-stopped
+
+networks:
+  postgres:
+    driver: bridge
+
+volumes:
+  postgres:
+  pgadmin:
