@@ -27,9 +27,8 @@ public class Main {
             Customer jasmine = new Customer(faker.name().firstName() + " " + faker.name().lastName(), faker.internet().emailAddress(), faker.number().numberBetween(1, 100));
             Customer danil = new Customer(faker.name().firstName() + " " + faker.name().lastName(), faker.internet().emailAddress(), faker.number().numberBetween(1, 100));
             List<Customer> customerList = List.of(jasmine,danil);
+
             customerRepository.saveAll(customerList);
-
-
 
         };
     }
